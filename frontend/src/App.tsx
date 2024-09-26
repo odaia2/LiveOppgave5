@@ -3,23 +3,31 @@ import Grid from "./components/Grid";
 import Total from "./components/Total";
 import type { Student } from "./components/Types";
 
-const intitalStudent = [
+const initialStudents = [
     { id: "1", name: "Ola Normann" },
     { id: "2", name: "Kari Normann" },
 ];
 
 function App() {
-    // students ?? []
-    const [students, setStudents] = useState<Student[]>(intitalStudent ?? []);
+    
+    const [students, setStudents] = useState<Student[]>(initialStudents ?? []);
+    const [nextId, setNextId] = useState<number>(initialStudents.length + 1); 
 
+    
     const onAddStudent = (student: { name: string }) => {
-        setStudents((prev) => [...prev, { id: crypto.randomUUID(), ...student }]);
+        const newStudent = { id: nextId.toString(), ...student }; 
+        setStudents((prev) => [...prev, newStudent]);
+        setNextId((prevId) => prevId + 1); 
+    };
+
+    
+    const onDeleteStudent = (id: string) => {
+        setStudents((prev) => prev.filter((student) => student.id !== id));
     };
 
     return (
         <main>
-            {/* <Student name="Marius" id="123" /> */}
-            <Grid students={students} onAddStudent={onAddStudent} />
+            <Grid students={students} onAddStudent={onAddStudent} onDeleteStudent={onDeleteStudent} />
             <Total total={students.length} />
         </main>
     );
