@@ -1,5 +1,7 @@
-export default function Total() {
+export default function Total({total}: Readonly<{total: number}>) {
+
+    if(total === 0) return null;
   return (
-    <div>Total</div>
+    <div>Antall studenter: {total}</div>
   )
 }

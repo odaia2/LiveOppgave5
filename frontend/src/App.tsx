@@ -1,22 +1,28 @@
+import { useState } from "react";
 import Grid from "./components/Grid";
+import Total from "./components/Total";
+import type { Student } from "./components/Types";
 
-
-const students = [
-  { id: "1", name: "Odai" },
-  { id: "2", name: "Khalil" },
-  { id: "3", name: "Abdullah" },
+const intitalStudent = [
+    { id: "1", name: "Ola Normann" },
+    { id: "2", name: "Kari Normann" },
 ];
 
-
 function App() {
-  return(<>
+    // students ?? []
+    const [students, setStudents] = useState<Student[]>(intitalStudent ?? []);
 
-  {/*<h1>Start</h1>
-  <Student id ={13} name="Odai"/>*/}
-  <Grid students={students}/>
-  
- </>
- )
+    const onAddStudent = (student: { name: string }) => {
+        setStudents((prev) => [...prev, { id: crypto.randomUUID(), ...student }]);
+    };
+
+    return (
+        <main>
+            {/* <Student name="Marius" id="123" /> */}
+            <Grid students={students} onAddStudent={onAddStudent} />
+            <Total total={students.length} />
+        </main>
+    );
 }
 
 export default App;

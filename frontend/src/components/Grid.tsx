@@ -1,28 +1,29 @@
-import { useState } from "react";
 import Student from "./Student";
-import AddStudentForm from "./AddStudentForm"; 
 import type { Student as StudentProp } from "./Types";
+import AddStudentForm from "./AddStudentForm";
 
 type GridProps = {
-  students: StudentProp[];
+    students: StudentProp[];
+    onAddStudent: ({ name }: { name: string }) => void;
 };
 
-export default function Grid({ students }: GridProps) {
-  const [studentList, setStudentList] = useState<StudentProp[]>(students ?? []);
+export default function Grid(props: GridProps) {
+    const { students, onAddStudent } = props;
+    // props.students ?? []
+    //     const [students, setStudents] = useState<StudentProp[]>(props.students ?? []);
 
-  const onAaddStudent = (student: {name: string}) => {
-    setStudentList(prev => [...prev, {id: crypto.randomUUID(), ...student}]);
-  };
+    // const onAddStudent = (student: { name: string }) => {
+    //     setStudents((prev) => [...prev, { id: crypto.randomUUID(), ...student }]);
+    // };
 
-  return (
-    <section>
-      <article className="grid">
-        {studentList?.map((student) => (
-          <Student key={student.id} name={student.name} id={student.id} />
-        ))}
-      </article>
-
-      <AddStudentForm onAddStudent={onAaddStudent} />
-      </section>
-  );
+    return (
+        <section>
+            <article className="grid">
+                {students.map((student) => (
+                    <Student key={student.id} name={student.name} id={student.id} />
+                ))}
+            </article>
+            <AddStudentForm onAddStudent={onAddStudent} />
+        </section>
+    );
 }
